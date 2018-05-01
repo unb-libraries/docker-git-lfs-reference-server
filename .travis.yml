@@ -6,14 +6,12 @@ services:
 env:
   global:
     - DOCKER_COMPOSE_VERSION=1.9.0
-    - DOCKER_CORE_VERSION=1.12.3-0~trusty
     - DOCKER_IMAGE_NAME=unblibraries/docker-git-lfs-reference-server
     - DOCKER_IMAGE_PARENT=golang:1.9-alpine
     - DOCKER_IMAGE_TAG=alpine
     - ENDPOINT_NAME=git-lfs
 
 before_install:
-  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine="${DOCKER_CORE_VERSION}"
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
