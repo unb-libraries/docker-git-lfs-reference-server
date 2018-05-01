@@ -1,0 +1,36 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - DOCKER_COMPOSE_VERSION=1.9.0
+    - DOCKER_CORE_VERSION=1.12.3-0~trusty
+    - DOCKER_IMAGE_NAME=unblibraries/docker-git-lfs-reference-server
+    - DOCKER_IMAGE_PARENT=golang:1.9-alpine
+    - DOCKER_IMAGE_TAG=alpine
+    - ENDPOINT_NAME=git-lfs
+
+before_install:
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine="${DOCKER_CORE_VERSION}"
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+before_script:
+  - docker pull "$DOCKER_IMAGE_PARENT"
+
+script:
+  - docker-compose build
+  - docker-compose up -d
+  - travis/waitForDeploy.sh
+
+after_success:
+  - travis/triggerDockerHubBuild.sh
+
+notifications:
+  slack:
+    secure: MJiUG+nFhytwzCnbW99Nm2dheoj8jQ/ZTrd13JGEpa503TDLGROqPA0lYUHRkoEiA70a3AhDlRWScGN9XVj/Q+M8gEkRI9HL5T9wduzUxKEOdmo7HdAUNKbkRXa+QvCRqtnf5g/JKGBvLjq9VyrQ1ogimloWepMMAUZ5U2kGnbNEys062x6AZJhYegvJ6vpV3P+pOIN+6yi9acyjbgeBLT+fXPJMOsjxc9ztMdK3qarMvkZOBsS8wPGyKMPFZwSbhiGeIMEFODMf6Is6BikqLz4o3bONIwARuFP1XGIzLX5BrI3JwsLjQTh5c1ngZ2GX7tfTT3wYd/9+261MHxBT2hQtEnkz89qomA8k6tCC2EpgD7+sVx6fe2t000NQTBw2hrVd6nwDDVSiJQ0hgQCSTtBVzH3/RqDrSwv/CO8qbNNxqaDP4IfpEW4olSqgFqdM50LFQGXt6fq5GdJDuQvLWg7jggzBaCCiAUF50ALuRER8JuT55uDPyyoqLYV23R3WAn58bxfjZCS6qwEuv/+O4plj/O818MmOsDdqNLbTRvqUpKiqPF4cVOTnh65CDJRNwgK4OhGiSERhifu3VGx9M9hXuDPa/FUrs4u4HOg54O0ctsVelzT/YAGaw1yeEO+BoFFZuJN6U7wjPPe/JPPhrskqga5VPiPfomGCao9IOzI=
+    rooms:
+      secure: VwRtA9uexkFq2b0wgMiwJ9Q9vPsexkqWLEHk1dPOZmgIDazaWcahNcZ0ABII+zhuyerSsSs8/0U/ZBCIV1Hhwx1GCvGNLkk6qQbpSHv+QNOYFEbgCUzZKIw18veUk1OTRWCQ+qRnChB+PdW6U6O37DuurBqIMWQ+2MZvd/B9ckSuSPBB6pcOUFZkF8Cmpfih/qoJZ4qhnHEtdjUd2uORNwYp2Af2508Lfw7Wob+cb8AUGOyVrKQk+BQA0uF3TzrFy7SjAucP90Mg1OesA3to5fwHrRZF1j2GfnLDIiXaSn43vML+jz0iWtaZdXd0+7xy6WP3EWC2PUM+ACgQ3Pac/WlcH8JMAk1O71KWchiV240l0JJ1FIzlxcMDhmlBtY3V1ZwpDr2l5YshDqlFly7iOmwHaKTkcnie55G9F3huTo/+H5g/RHcbUiQRNIiBGgfcahrq+/OUGtqK03DcmEHoTbGZ3saz6031rcCvwCPc6cKNVlKpmyqyk/bZz9/wSOtKlfmnjvDcwpC6Lf8zX/jV64R2zHg4CHLY6z5g+qLdnM7tvMAyhp8n68kr18qs2cwPiSOkbCugvs9HaszA2aTO7Z28KU4cHhVWC5FVH8sYfgzQJNnQDCeJwkMzftQVWcg4bqu+60HhjL5iDvmcOvR1lovqRJsAty9yJDID/0ij1bg=

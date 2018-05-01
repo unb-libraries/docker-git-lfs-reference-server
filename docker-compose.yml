@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  git-lfs:
+    build:
+      context: .
+    expose:
+     - "6983"
+    ports:
+      - "6983:6983"
+    env_file:
+      - ./env/git-lfs.env
