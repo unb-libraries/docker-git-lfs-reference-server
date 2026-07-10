@@ -1,11 +1,11 @@
 FROM golang:1.16-alpine
 
-ENV LFS_LISTEN tcp://:6983
-ENV LFS_HOST localhost:6983
-ENV LFS_CONTENTPATH /data
-ENV LFS_ADMINUSER notadmin
-ENV LFS_ADMINPASS notadminpass
-ENV LFS_SCHEME http
+ENV LFS_LISTEN="tcp://:6983"
+ENV LFS_HOST="localhost:6983"
+ENV LFS_CONTENTPATH="/data"
+ENV LFS_ADMINUSER="notadmin"
+ENV LFS_ADMINPASS="notadminpass"
+ENV LFS_SCHEME="http"
 
 COPY ./scripts /scripts
 RUN apk --update add git && \
