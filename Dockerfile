@@ -19,13 +19,12 @@ EXPOSE 6983
 CMD /scripts/run.sh
 
 LABEL ca.unb.lib.generator="lfs" \
-  org.label-schema.build-date=$BUILD_DATE \
-  org.label-schema.description="docker-git-lfs-reference-server is the base Git LFS reference server at UNB Libraries." \
-  org.label-schema.name="git-lfs-reference-server" \
-  org.label-schema.url="https://github.com/unb-libraries/docker-git-lfs-reference-server" \
-  org.label-schema.vcs-ref=$VCS_REF \
-  org.label-schema.vcs-url="https://github.com/unb-libraries/docker-git-lfs-reference-server" \
-  org.label-schema.version=$VERSION \
+  org.opencontainers.image.title="git-lfs-reference-server" \
+  org.opencontainers.image.description="docker-git-lfs-reference-server is the base Git LFS reference server at UNB Libraries." \
   org.opencontainers.image.authors="Jacob Sanford <jsanford_at_unb.ca>" \
-  org.opencontainers.image.source="https://github.com/unb-libraries/docker-git-lfs-reference-server"
+  org.opencontainers.image.url="https://github.com/unb-libraries/docker-git-lfs-reference-server" \
+  org.opencontainers.image.source="https://github.com/unb-libraries/docker-git-lfs-reference-server" \
+  org.opencontainers.image.version="$VERSION" \
+  org.opencontainers.image.revision="$VCS_REF" \
+  org.opencontainers.image.created="$BUILD_DATE"
 
