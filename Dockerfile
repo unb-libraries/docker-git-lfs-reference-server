@@ -1,5 +1,4 @@
 FROM golang:1.16-alpine
-MAINTAINER Jacob Sanford <jsanford_at_unb.ca>
 
 ENV LFS_LISTEN tcp://:6983
 ENV LFS_HOST localhost:6983
@@ -27,5 +26,6 @@ LABEL ca.unb.lib.generator="lfs" \
   org.label-schema.vcs-ref=$VCS_REF \
   org.label-schema.vcs-url="https://github.com/unb-libraries/docker-git-lfs-reference-server" \
   org.label-schema.version=$VERSION \
+  org.opencontainers.image.authors="Jacob Sanford <jsanford_at_unb.ca>" \
   org.opencontainers.image.source="https://github.com/unb-libraries/docker-git-lfs-reference-server"
 
